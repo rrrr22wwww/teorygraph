@@ -6,10 +6,7 @@ type SingleNumberProperty = {
 type typeGraph = "directed" | "undirected"
 type typeGraphArg = Map<number, string[][]>;
 
-// type filedata = Map<number, [string, string][]>;
-
 class graph {
-  private vertexWeight: [];
   public typeGraph:typeGraph;
   public filedata;
   public size() {
@@ -48,7 +45,6 @@ class graph {
   public add_vertex(v1: number): void {
     if (!this.filedata.has(v1)) {
       this.filedata.set(v1, []);
-      // console.log(this.filedata)
     }
     console.log("This vertex is already there ");
   }
@@ -56,7 +52,6 @@ class graph {
     // if(this.is_edge(v1,v2)) { throw new Error("This edge is already there");} - не уверне что нужна проверка :l
     const oldEdges = this.filedata.get(v1) || [];
     this.filedata.set(v1, [...oldEdges, [v2.toString(), weight.toString()]]);
-    // console.log(this.filedata)
   }
 
   public list_of_edges(vertex?: number) {
@@ -91,7 +86,6 @@ class graph {
     const vertexStr = vertex.toString();
     return resultList.filter(edge => edge.from === vertexStr || edge.to === vertexStr);
   }
-    // console.log(edgeList);
     return resultList;
   }
 
@@ -115,17 +109,8 @@ class graph {
   constructor(pathGraph: string, tGraph:typeGraph) {
     this.filedata = this.readfile(pathGraph);
     this.typeGraph = tGraph;
-    this.vertexWeight = [];
   }
 }
-
-// console.log(Graph2)
-// console.log(Graph2.weight(2,4))
-// console.log(Graph2.size())
-// Graph2.add_edge(2,5,22)
-// Graph2.add_vertex(12)
-// console.log(Graph2.is_edge(10,5))
-// console.log(Graph2.list_of_edges(3))
 
 function Dijkstra(star: number, graph: typeGraphArg) {
   let d: SingleNumberProperty = {};
@@ -166,151 +151,89 @@ function Dijkstra(star: number, graph: typeGraphArg) {
         }
       }
     } else {
-      console.warn(`Нет соседей для вершины ${current}`);
+      console.warn(`There are no neighbors for the vertex ${current}`);
     }
   }
 
-  console.log("Итоговые расстояния:", d);
+  console.log("Total distances:", d);
   return d;
 }
 
-  function Prim(graph: graph): void {
-  if (graph.typeGraph !== "undirected") {
-    console.error("Prim's algorithm requires an undirected graph.");
-    return;
+function isConnected(graph: graph): boolean {
+  const vertices = Array.from(graph.filedata.keys());
+  
+  if (vertices.length <= 1) return true;
+
+  const visited = new Set<number>();
+
+  function dfs(vertex: number) {
+    visited.add(vertex);
+    const neighbors = graph.filedata.get(vertex) || [];
+    for (const edge of neighbors) {
+      if (!visited.has(Number(edge[0]))) {
+        dfs(Number(edge[0]));
+      }
+    }
   }
 
-  const sortedEdges = graph.list_of_edges().sort((a, b) => a.wight - b.wight);
-  // console.log(sortedEdges);
+  dfs(vertices[0]);
+  return visited.size === graph.size();
+}
+
+
+
+function Prim(graph: graph): void {
+  if(!isConnected(graph)) {return console.log("The graph is not connected")}
+  let mst: string[][] = [];
   let vertices = Array.from(graph.filedata.keys());
   const originalSize = vertices.length;
   const visited: number[] = [];
-  const adjList: string[][] = [];
-  console.log(vertices);
-  for(let i = 0; i < originalSize; i++) {
-    if (visited.length >= originalSize) break; // Безопасность
+  let adjList: string[][] = [];
+  
+  for(let i = 0; i < originalSize - 1 ; i++) {
     if (visited.length === 0) {
       visited.push(vertices[i]);
       adjList.push(...graph.filedata.get(visited[i]))
       vertices = vertices.filter(vertex => vertex !== visited[i])
     }
     if (visited.length !== 0) {
-      // Поиск min ребра к unvisited (без splice)
+      if (adjList.length === 0) {
+        continue;
+      }
+
       let minEdge: string[] | null = null;
-      let minW = Infinity;
-      for (let j = 0; j < adjList.length; j++) { // j вместо i
-        const edge = adjList[j];
+      let minWeight = Infinity;
+
+     
+      for (const edge of adjList) {
         const target = Number(edge[0]);
         const weight = Number(edge[1]);
-        if (!visited.includes(target) && vertices.includes(target) && weight < minW) {
-          minW = weight;
+
+        if (!visited.includes(target) && weight < minWeight) {
+          minWeight = weight;
           minEdge = edge;
         }
       }
-      if (minEdge === null || vertices.length === 0) continue; // Нет кандидатов
-      const newVertex = Number(minEdge[0]);
-      visited.push(newVertex);
-      adjList.push(...(graph.filedata.get(newVertex) || [])); // Добавь новые ребра
-      vertices = vertices.filter(vertex => vertex !== newVertex);
+      if (minEdge === null) {
+        continue;
+      }
+      adjList = adjList.filter(edge => edge !== minEdge);
+      
+      const curretVertex = minEdge;
+      mst.push(minEdge);
+      visited.push(Number(curretVertex[0]));
+      const newNeighbors = graph.filedata.get(Number(curretVertex[0]));
+      const filteredNeighbors = newNeighbors.filter((edge:any) => !visited.includes(Number(edge[0])));
+      adjList.push(...filteredNeighbors);
+      vertices = vertices.filter(vertex => vertex !== Number(curretVertex[0]))
     }
-    // sortedEdges.filter(edge => edge.from === visited[i].toString())
-    // console.log(sortedEdges)
   }
   console.log(visited)
-  console.log(adjList)
+  console.log(mst)
   console.log(vertices)
 
-
-
-  // let i = 1;
-  // for (const vertex of vertices) {
-  //   adjList.set(vertex, i);
-  //   i++;
-  // }
-  // for (let vertex of graph.filedata.keys()) {
-  //   adjList.set(vertex, -1);
-  // // }
-  // console.log(adjList);
-
-  // for (let edges of graph.values()) {
-  //     edgeList.push(...edges)
-  // }
-  // console.log(edgeList)
 }
 
-const Graph2 = new graph("./chek.txt", "undirected");
-// console.log(Graph2.filedata)
-// Dijkstra(1, Graph2.filedata);
-// Prim(Graph2.filedata)
-// console.log(Graph2.list_of_edges(2));
+const Graph2 = new graph("./chek.txt", "directed");
+Dijkstra(1,Graph2.filedata)
 Prim(Graph2);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const myObject: { [key: number]: [string, string][] } = {
-//   1: [
-//     ["2", "15"],
-//     ["4", "51"],
-//     ["7", "31"],
-//   ],
-//   2: [
-//     ["1", "15"],
-//     ["4", "25"],
-//     ["7", "43"],
-//   ],
-//   3: [
-//     ["8", "30"],
-//     ["9", "20"],
-//     ["6", "35"],
-//   ],
-//   4: [
-//     ["1", "51"],
-//     ["2", "25"],
-//     ["7", "81"],
-//   ],
-//   5: [["10", "16"]],
-//   6: [
-//     ["8", "8"],
-//     ["9", "39"],
-//     ["3", "35"],
-//   ],
-//   7: [
-//     ["1", "31"],
-//     ["2", "43"],
-//     ["4", "81"],
-//   ],
-//   8: [
-//     ["9", "12"],
-//     ["3", "30"],
-//     ["6", "8"],
-//   ],
-//   9: [
-//     ["8", "12"],
-//     ["3", "20"],
-//     ["6", "39"],
-//   ],
-//   10: [["5", "16"]],
-// };
