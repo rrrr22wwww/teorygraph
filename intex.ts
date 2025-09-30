@@ -10,7 +10,7 @@ type typeGraphArg = Map<number, string[][]>;
 
 class graph {
   private vertexWeight: [];
-  private typeGraph:typeGraph;
+  public typeGraph:typeGraph;
   public filedata;
   public size() {
     return this.filedata.size;
@@ -91,7 +91,7 @@ class graph {
     const vertexStr = vertex.toString();
     return resultList.filter(edge => edge.from === vertexStr || edge.to === vertexStr);
   }
-    console.log(edgeList);
+    // console.log(edgeList);
     return resultList;
   }
 
@@ -152,9 +152,6 @@ function Dijkstra(star: number, graph: typeGraphArg) {
     let current = Number(currentVertexStr);
     visited[currentVertexStr] = true;
     numVisited++;
-
-    // console.log(`Переходим к вершине ${current} (расстояние: ${minDist})`);
-
     const listweight = graph.get(current);
     if (listweight) {
       for (let j = 0; j < listweight.length; j++) {
@@ -177,19 +174,63 @@ function Dijkstra(star: number, graph: typeGraphArg) {
   return d;
 }
 
-function Prim(graph: graph): void {
-  const sortedEdges = graph.list_of_edges().sort((a, b) => a.wight - b.wight);
-  const adjList: Map<number, number> = new Map();
-  const vertices = Array.from(graph.filedata.keys()); // НУЖНО ПЕРЕДЕЛАТЬ ВРОДЕ НЕ ТО!!!!!
-  let i = 1;
-  for (const vertex of vertices) {
-    adjList.set(vertex, i);
-    i++;
+  function Prim(graph: graph): void {
+  if (graph.typeGraph !== "undirected") {
+    console.error("Prim's algorithm requires an undirected graph.");
+    return;
   }
+
+  const sortedEdges = graph.list_of_edges().sort((a, b) => a.wight - b.wight);
+  // console.log(sortedEdges);
+  let vertices = Array.from(graph.filedata.keys());
+  const originalSize = vertices.length;
+  const visited: number[] = [];
+  const adjList: string[][] = [];
+  console.log(vertices);
+  for(let i = 0; i < originalSize; i++) {
+    if (visited.length >= originalSize) break; // Безопасность
+    if (visited.length === 0) {
+      visited.push(vertices[i]);
+      adjList.push(...graph.filedata.get(visited[i]))
+      vertices = vertices.filter(vertex => vertex !== visited[i])
+    }
+    if (visited.length !== 0) {
+      // Поиск min ребра к unvisited (без splice)
+      let minEdge: string[] | null = null;
+      let minW = Infinity;
+      for (let j = 0; j < adjList.length; j++) { // j вместо i
+        const edge = adjList[j];
+        const target = Number(edge[0]);
+        const weight = Number(edge[1]);
+        if (!visited.includes(target) && vertices.includes(target) && weight < minW) {
+          minW = weight;
+          minEdge = edge;
+        }
+      }
+      if (minEdge === null || vertices.length === 0) continue; // Нет кандидатов
+      const newVertex = Number(minEdge[0]);
+      visited.push(newVertex);
+      adjList.push(...(graph.filedata.get(newVertex) || [])); // Добавь новые ребра
+      vertices = vertices.filter(vertex => vertex !== newVertex);
+    }
+    // sortedEdges.filter(edge => edge.from === visited[i].toString())
+    // console.log(sortedEdges)
+  }
+  console.log(visited)
+  console.log(adjList)
+  console.log(vertices)
+
+
+
+  // let i = 1;
+  // for (const vertex of vertices) {
+  //   adjList.set(vertex, i);
+  //   i++;
+  // }
   // for (let vertex of graph.filedata.keys()) {
   //   adjList.set(vertex, -1);
-  // }
-  console.log(adjList);
+  // // }
+  // console.log(adjList);
 
   // for (let edges of graph.values()) {
   //     edgeList.push(...edges)
@@ -197,7 +238,7 @@ function Prim(graph: graph): void {
   // console.log(edgeList)
 }
 
-const Graph2 = new graph("./chek.txt", "directed");
+const Graph2 = new graph("./chek.txt", "undirected");
 // console.log(Graph2.filedata)
 // Dijkstra(1, Graph2.filedata);
 // Prim(Graph2.filedata)
