@@ -42,6 +42,13 @@ class graph {
     }
     return false;
   }
+  public rm_edge (v1: number, v2: number) {
+    const edgeVertex = this.filedata.get(v1)
+    for (let i = 0; i < edgeVertex.length - 1; i++) {
+      if (v2.toString() == edgeVertex[i][0]) edgeVertex.splice(i,1)
+    }
+  }
+
   public add_vertex(v1: number): void {
     if (!this.filedata.has(v1)) {
       this.filedata.set(v1, []);
@@ -49,7 +56,7 @@ class graph {
     console.log("This vertex is already there ");
   }
   public add_edge(v1: number, v2: number, weight: number): void {
-    // if(this.is_edge(v1,v2)) { throw new Error("This edge is already there");} - не уверне что нужна проверка :l
+    if(this.is_edge(v1,v2)) { throw new Error("This edge is already there");}
     const oldEdges = this.filedata.get(v1) || [];
     this.filedata.set(v1, [...oldEdges, [v2.toString(), weight.toString()]]);
   }
@@ -93,7 +100,7 @@ class graph {
     return fs.readFileSync(path, "utf-8");
   }
 
-  private readfile(path: string) {
+  public readfile(path: string) {
     const content = this.readfiles(path).split("\n");
     const weightgraph = new Map();
     for (let i = 1; i < content.length - 1; i++) {
@@ -107,7 +114,12 @@ class graph {
     return weightgraph;
   }
   constructor(pathGraph: string, tGraph:typeGraph) {
-    this.filedata = this.readfile(pathGraph);
+    if (pathGraph == "") {
+      this.filedata= new Map();
+    }
+    else {
+      this.filedata = this.readfile(pathGraph);
+    }
     this.typeGraph = tGraph;
   }
 }
@@ -155,7 +167,7 @@ function Dijkstra(star: number, graph: typeGraphArg) {
     }
   }
 
-  console.log("Total distances:", d);
+  // console.log("Total distances:", d);
   return d;
 }
 
@@ -234,6 +246,11 @@ function Prim(graph: graph): void {
 
 }
 
-const Graph2 = new graph("./chek.txt", "directed");
-Dijkstra(1,Graph2.filedata)
-Prim(Graph2);
+// const Graph2 = new graph("./chek.txt", "directed");
+// console.log(Graph2.filedata)
+// Graph2.rm_edge(1,2)
+// console.log(Graph2.filedata)
+// Dijkstra(1,Graph2.filedata)
+// Prim(Graph2);
+
+export { graph, Dijkstra, isConnected, Prim };
