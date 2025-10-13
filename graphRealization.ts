@@ -120,12 +120,12 @@ public rm_edge(v1: number, v2: number): void {
     return resultList;
   }
 
-  private readfiles(path: string) {
+  private readfiles(path: string) { 
     return fs.readFileSync(path, "utf-8");
   }
 
   public readfile(path: string) {
-    const content = this.readfiles(path).split("\n");
+    const content = this.readfiles(path).split("\n").map(line => line.trim());
     const weightgraph = new Map();
     console.log(content)
     for (let i = 1; i < content.length - 1; i++) {
@@ -271,7 +271,7 @@ function Prim(graph: graph): void {
 
 }
 
-// const Graph2 = new graph("C:/Users/oisa0/OneDrive/Рабочий стол/tgr/teorygraph/test/list_of_adjacency/bpg_002.txt", "directed");
+// const Graph2 = new graph("C:/Users/oisa0/OneDrive/Рабочий стол/tgr/teorygraph/test/list_of_adjacency/bpg_004.txt", "directed");
 // console.log(Graph2.filedata)
 // Graph2.rm_edge(1,2)
 // console.log(Graph2.filedata)

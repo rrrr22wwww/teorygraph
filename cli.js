@@ -152,12 +152,18 @@ const run = async () => {
             from: () => clack.text({
                 message: 'From:',
                 placeholder: '1',
-                validate: (value) => !isNaN(Number(value)) || 'Должно быть числом',
+                validate: (value) => {
+                  if (!isNaN(Number(value))) return null;
+                  return 'Должно быть числом';
+                },
             }),
             to: () => clack.text({
                 message: 'To:',
                 placeholder: '2',
-                validate: (value) => !isNaN(Number(value)) || 'Должно быть числом',
+                validate: (value) => {
+                  if (!isNaN(Number(value))) return null;
+                  return 'Должно быть числом';
+                },
             }),
             weight: () => clack.text({
                 message: 'Вес:',
@@ -187,7 +193,15 @@ const run = async () => {
           if (clack.isCancel(vertsInput)) break;
           const verts = vertsInput.split(',').map(v => Number(v.trim()));
           for (const v of verts) {
-            currentGraph.rm_vertex(v); // Используем метод класса
+            currentGraph.filedata.delete(v);
+            // console.log(currentGraph.filedata);
+            currentGraph.filedata.forEach((edges) => {
+              for (let i = edges.length - 1; i >= 0; i--) {
+                if (Number(edges[i][0]) === v) {
+                  edges.splice(i, 1);
+                }
+              }
+            });
           }
           clack.log.success('Вершины удалены.');
           break;
@@ -198,12 +212,18 @@ const run = async () => {
             from: () => clack.text({
                 message: 'From:',
                 placeholder: '1',
-                validate: (value) => !isNaN(Number(value)) || 'Должно быть числом',
+                validate: (value) => {
+                  if (!isNaN(Number(value))) return null;
+                  return 'Должно быть числом';
+                },
             }),
             to: () => clack.text({
                 message: 'To:',
                 placeholder: '2',
-                validate: (value) => !isNaN(Number(value)) || 'Должно быть числом',
+                validate: (value) => {
+                  if (!isNaN(Number(value))) return null;
+                  return 'Должно быть числом';
+                },
             }),
           });
           if (clack.isCancel(result)) break;
