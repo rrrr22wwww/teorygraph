@@ -86,26 +86,26 @@ public rm_edge(v1: number, v2: number): void {
   }
 
   public list_of_edges(vertex?: number) {
-    const edgeList: { from: string; to: string; wight: number }[] = [];
+    const edgeList: { from: string; to: string; weight: number }[] = [];
     for (let edges of this.filedata) {
       for (let i = 0; i < edges[1].length; i++) {
         edgeList.push({
           from: edges[0].toString(),
           to: edges[1][i][0].toString(),
-          wight: edges[1][i][1],
+          weight: edges[1][i][1],
         });
       }
     }
     let resultList = edgeList;
     if (this.typeGraph === "undirected") {
-      const uniqueEdges = new Map<string, { from: string; to: string; wight: number }>();
+      const uniqueEdges = new Map<string, { from: string; to: string; weight: number }>();
       for (let edge of edgeList) {
         const key = `${Math.min(Number(edge.from), Number(edge.to))}-${Math.max(Number(edge.from), Number(edge.to))}`;
         if (!uniqueEdges.has(key)) {
           uniqueEdges.set(key, { 
             from: edge.from, 
             to: edge.to,
-            wight: edge.wight
+            weight: edge.weight
            });
         }
       }
@@ -127,6 +127,7 @@ public rm_edge(v1: number, v2: number): void {
   public readfile(path: string) {
     const content = this.readfiles(path).split("\n");
     const weightgraph = new Map();
+    console.log(content)
     for (let i = 1; i < content.length - 1; i++) {
       const lineParts = content[i].split(" ");
       const parsedLine = [];
@@ -270,7 +271,7 @@ function Prim(graph: graph): void {
 
 }
 
-// const Graph2 = new graph("./chek.txt", "directed");
+// const Graph2 = new graph("C:/Users/oisa0/OneDrive/Рабочий стол/tgr/teorygraph/test/list_of_adjacency/bpg_002.txt", "directed");
 // console.log(Graph2.filedata)
 // Graph2.rm_edge(1,2)
 // console.log(Graph2.filedata)

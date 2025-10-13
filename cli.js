@@ -52,7 +52,10 @@ const run = async () => {
         { value: 'mst', label: 'MST (mst)' },
         { value: 'quit', label: 'Выход (quit)' },
       ],
-    });
+    }
+      
+  )
+  if (clack.isCancel(command)) break;
 
     if (command === 'quit') {
       clack.outro('Успех!');
@@ -216,11 +219,8 @@ const run = async () => {
           break;
         }
         case 'edges': {
-          if (!currentGraph) throw new Error('Граф не инициализирован.');
-          const edges = currentGraph.list_of_edges();
           clack.note('Рёбра:');
-          // Исправлена опечатка wight -> weight
-          console.table(edges.map(e => ({ from: e.from, to: e.to, weight: e.weight })));
+          console.table(currentGraph.list_of_edges().map(e => ({ from: e.from, to: e.to, weight: e.weight })));
           break;
         }
         case 'connectivity': {
