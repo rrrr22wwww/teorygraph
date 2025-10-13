@@ -35,19 +35,43 @@ class graph {
     return null;
   }
 
-  public is_edge(v1: number, v2: number): boolean {
-    const edgeVertex = [...this.filedata.get(v1), ...this.filedata.get(v2)];
-    for (let i = 0; i < edgeVertex.length - 1; i++) {
-      if (v1 == edgeVertex[i][0] || v2 == edgeVertex[i][0]) return true;
+public is_edge(v1: number, v2: number): boolean {
+    const v1Neighbors = this.filedata.get(v1) || [];
+    for (const edge of v1Neighbors) {
+        if (Number(edge[0]) === v2) {
+            return true;
+        }
+    }
+    if (this.typeGraph === "undirected") {
+        const v2Neighbors = this.filedata.get(v2) || [];
+        for (const edge of v2Neighbors) {
+            if (Number(edge[0]) === v1) {
+                return true;
+            }
+        }
     }
     return false;
-  }
-  public rm_edge (v1: number, v2: number) {
-    const edgeVertex = this.filedata.get(v1)
-    for (let i = 0; i < edgeVertex.length - 1; i++) {
-      if (v2.toString() == edgeVertex[i][0]) edgeVertex.splice(i,1)
+}
+public rm_edge(v1: number, v2: number): void {
+    const edgeVertex = this.filedata.get(v1);
+    if (edgeVertex) {
+        for (let i = edgeVertex.length - 1; i >= 0; i--) {
+            if (Number(edgeVertex[i][0]) === v2) {
+                edgeVertex.splice(i, 1);
+            }
+        }
     }
-  }
+    if (this.typeGraph === "undirected") {
+        const edgeVertex2 = this.filedata.get(v2);
+        if (edgeVertex2) {
+            for (let i = edgeVertex2.length - 1; i >= 0; i--) {
+                if (Number(edgeVertex2[i][0]) === v1) {
+                    edgeVertex2.splice(i, 1);
+                }
+            }
+        }
+    }
+}
 
   public add_vertex(v1: number): void {
     if (!this.filedata.has(v1)) {
@@ -153,8 +177,8 @@ function Dijkstra(star: number, graph: typeGraphArg) {
     if (listweight) {
       for (let j = 0; j < listweight.length; j++) {
         const a: string[] = listweight[j];
-        const neighbor = a[0]; // Строка, напр. "2"
-        const weight = Number(a[1]); // Число, напр. 15
+        const neighbor = a[0]; 
+        const weight = Number(a[1]);
 
         let newDist = d[currentVertexStr] + weight;
         if (newDist < d[neighbor]) {

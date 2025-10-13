@@ -2,8 +2,8 @@
 
 ```mermaid
 graph TD
-  node1["22<br/>size: 101"]
-  node2["-246<br/>size: 39"]
+  node1["22<br/>size: 100"]
+  node2["-225<br/>size: 38"]
   node1 -->|L| node2
   node3["-842<br/>size: 26"]
   node2 -->|L| node3
@@ -57,151 +57,149 @@ graph TD
   node24 -->|R| node27
   node28["-282<br/>size: 1"]
   node27 -->|L| node28
-  node29["-207<br/>size: 12"]
+  node29["-207<br/>size: 11"]
   node2 -->|R| node29
-  node30["-225<br/>size: 1"]
-  node29 -->|L| node30
-  node31["-170<br/>size: 10"]
-  node29 -->|R| node31
-  node32["-176<br/>size: 3"]
+  node30["-170<br/>size: 10"]
+  node29 -->|R| node30
+  node31["-176<br/>size: 3"]
+  node30 -->|L| node31
+  node32["-192<br/>size: 2"]
   node31 -->|L| node32
-  node33["-192<br/>size: 2"]
+  node33["-197<br/>size: 1"]
   node32 -->|L| node33
-  node34["-197<br/>size: 1"]
-  node33 -->|L| node34
-  node35["-112<br/>size: 6"]
-  node31 -->|R| node35
-  node36["-159<br/>size: 1"]
-  node35 -->|L| node36
-  node37["6<br/>size: 4"]
-  node35 -->|R| node37
-  node38["-86<br/>size: 3"]
-  node37 -->|L| node38
-  node39["-6<br/>size: 2"]
-  node38 -->|R| node39
-  node40["-27<br/>size: 1"]
-  node39 -->|L| node40
-  node41["109<br/>size: 61"]
-  node1 -->|R| node41
-  node42["33<br/>size: 2"]
-  node41 -->|L| node42
-  node43["52<br/>size: 1"]
-  node42 -->|R| node43
-  node44["2401<br/>size: 58"]
-  node41 -->|R| node44
-  node45["652<br/>size: 41"]
+  node34["-112<br/>size: 6"]
+  node30 -->|R| node34
+  node35["-159<br/>size: 1"]
+  node34 -->|L| node35
+  node36["6<br/>size: 4"]
+  node34 -->|R| node36
+  node37["-86<br/>size: 3"]
+  node36 -->|L| node37
+  node38["-6<br/>size: 2"]
+  node37 -->|R| node38
+  node39["-27<br/>size: 1"]
+  node38 -->|L| node39
+  node40["109<br/>size: 61"]
+  node1 -->|R| node40
+  node41["33<br/>size: 2"]
+  node40 -->|L| node41
+  node42["52<br/>size: 1"]
+  node41 -->|R| node42
+  node43["2401<br/>size: 58"]
+  node40 -->|R| node43
+  node44["652<br/>size: 41"]
+  node43 -->|L| node44
+  node45["112<br/>size: 16"]
   node44 -->|L| node45
-  node46["112<br/>size: 16"]
-  node45 -->|L| node46
-  node47["119<br/>size: 15"]
+  node46["119<br/>size: 15"]
+  node45 -->|R| node46
+  node47["312<br/>size: 14"]
   node46 -->|R| node47
-  node48["312<br/>size: 14"]
-  node47 -->|R| node48
-  node49["231<br/>size: 7"]
+  node48["231<br/>size: 7"]
+  node47 -->|L| node48
+  node49["131<br/>size: 1"]
   node48 -->|L| node49
-  node50["131<br/>size: 1"]
-  node49 -->|L| node50
-  node51["278<br/>size: 5"]
-  node49 -->|R| node51
-  node52["248<br/>size: 3"]
+  node50["278<br/>size: 5"]
+  node48 -->|R| node50
+  node51["248<br/>size: 3"]
+  node50 -->|L| node51
+  node52["245<br/>size: 1"]
   node51 -->|L| node52
-  node53["245<br/>size: 1"]
-  node52 -->|L| node53
-  node54["265<br/>size: 1"]
-  node52 -->|R| node54
-  node55["279<br/>size: 1"]
-  node51 -->|R| node55
-  node56["500<br/>size: 6"]
-  node48 -->|R| node56
-  node57["404<br/>size: 1"]
-  node56 -->|L| node57
-  node58["626<br/>size: 4"]
-  node56 -->|R| node58
-  node59["622<br/>size: 2"]
+  node53["265<br/>size: 1"]
+  node51 -->|R| node53
+  node54["279<br/>size: 1"]
+  node50 -->|R| node54
+  node55["500<br/>size: 6"]
+  node47 -->|R| node55
+  node56["404<br/>size: 1"]
+  node55 -->|L| node56
+  node57["626<br/>size: 4"]
+  node55 -->|R| node57
+  node58["622<br/>size: 2"]
+  node57 -->|L| node58
+  node59["590<br/>size: 1"]
   node58 -->|L| node59
-  node60["590<br/>size: 1"]
-  node59 -->|L| node60
-  node61["634<br/>size: 1"]
-  node58 -->|R| node61
-  node62["1130<br/>size: 24"]
-  node45 -->|R| node62
-  node63["698<br/>size: 9"]
+  node60["634<br/>size: 1"]
+  node57 -->|R| node60
+  node61["1130<br/>size: 24"]
+  node44 -->|R| node61
+  node62["698<br/>size: 9"]
+  node61 -->|L| node62
+  node63["684<br/>size: 1"]
   node62 -->|L| node63
-  node64["684<br/>size: 1"]
-  node63 -->|L| node64
-  node65["878<br/>size: 7"]
-  node63 -->|R| node65
-  node66["717<br/>size: 4"]
-  node65 -->|L| node66
-  node67["872<br/>size: 3"]
-  node66 -->|R| node67
-  node68["801<br/>size: 2"]
-  node67 -->|L| node68
-  node69["846<br/>size: 1"]
-  node68 -->|R| node69
-  node70["971<br/>size: 2"]
-  node65 -->|R| node70
-  node71["1029<br/>size: 1"]
-  node70 -->|R| node71
-  node72["2140<br/>size: 14"]
-  node62 -->|R| node72
-  node73["1275<br/>size: 11"]
+  node64["878<br/>size: 7"]
+  node62 -->|R| node64
+  node65["717<br/>size: 4"]
+  node64 -->|L| node65
+  node66["872<br/>size: 3"]
+  node65 -->|R| node66
+  node67["801<br/>size: 2"]
+  node66 -->|L| node67
+  node68["846<br/>size: 1"]
+  node67 -->|R| node68
+  node69["971<br/>size: 2"]
+  node64 -->|R| node69
+  node70["1029<br/>size: 1"]
+  node69 -->|R| node70
+  node71["2140<br/>size: 14"]
+  node61 -->|R| node71
+  node72["1275<br/>size: 11"]
+  node71 -->|L| node72
+  node73["1196<br/>size: 3"]
   node72 -->|L| node73
-  node74["1196<br/>size: 3"]
+  node74["1152<br/>size: 1"]
   node73 -->|L| node74
-  node75["1152<br/>size: 1"]
-  node74 -->|L| node75
-  node76["1226<br/>size: 1"]
-  node74 -->|R| node76
-  node77["1918<br/>size: 7"]
-  node73 -->|R| node77
-  node78["1588<br/>size: 6"]
+  node75["1226<br/>size: 1"]
+  node73 -->|R| node75
+  node76["1918<br/>size: 7"]
+  node72 -->|R| node76
+  node77["1588<br/>size: 6"]
+  node76 -->|L| node77
+  node78["1561<br/>size: 2"]
   node77 -->|L| node78
-  node79["1561<br/>size: 2"]
+  node79["1373<br/>size: 1"]
   node78 -->|L| node79
-  node80["1373<br/>size: 1"]
-  node79 -->|L| node80
-  node81["1746<br/>size: 3"]
-  node78 -->|R| node81
-  node82["1801<br/>size: 2"]
+  node80["1746<br/>size: 3"]
+  node77 -->|R| node80
+  node81["1801<br/>size: 2"]
+  node80 -->|R| node81
+  node82["1853<br/>size: 1"]
   node81 -->|R| node82
-  node83["1853<br/>size: 1"]
-  node82 -->|R| node83
-  node84["2283<br/>size: 2"]
-  node72 -->|R| node84
-  node85["2335<br/>size: 1"]
-  node84 -->|R| node85
-  node86["2905<br/>size: 16"]
-  node44 -->|R| node86
-  node87["2761<br/>size: 3"]
+  node83["2283<br/>size: 2"]
+  node71 -->|R| node83
+  node84["2335<br/>size: 1"]
+  node83 -->|R| node84
+  node85["2905<br/>size: 16"]
+  node43 -->|R| node85
+  node86["2761<br/>size: 3"]
+  node85 -->|L| node86
+  node87["2433<br/>size: 2"]
   node86 -->|L| node87
-  node88["2433<br/>size: 2"]
-  node87 -->|L| node88
-  node89["2448<br/>size: 1"]
-  node88 -->|R| node89
-  node90["4906<br/>size: 12"]
-  node86 -->|R| node90
-  node91["3371<br/>size: 6"]
+  node88["2448<br/>size: 1"]
+  node87 -->|R| node88
+  node89["4906<br/>size: 12"]
+  node85 -->|R| node89
+  node90["3371<br/>size: 6"]
+  node89 -->|L| node90
+  node91["3246<br/>size: 3"]
   node90 -->|L| node91
-  node92["3246<br/>size: 3"]
+  node92["3155<br/>size: 2"]
   node91 -->|L| node92
-  node93["3155<br/>size: 2"]
-  node92 -->|L| node93
-  node94["3199<br/>size: 1"]
-  node93 -->|R| node94
-  node95["4289<br/>size: 2"]
-  node91 -->|R| node95
-  node96["3486<br/>size: 1"]
-  node95 -->|L| node96
-  node97["5340<br/>size: 5"]
-  node90 -->|R| node97
-  node98["5230<br/>size: 1"]
-  node97 -->|L| node98
-  node99["8467<br/>size: 3"]
-  node97 -->|R| node99
-  node100["5766<br/>size: 2"]
-  node99 -->|L| node100
-  node101["8199<br/>size: 1"]
-  node100 -->|R| node101
+  node93["3199<br/>size: 1"]
+  node92 -->|R| node93
+  node94["4289<br/>size: 2"]
+  node90 -->|R| node94
+  node95["3486<br/>size: 1"]
+  node94 -->|L| node95
+  node96["5340<br/>size: 5"]
+  node89 -->|R| node96
+  node97["5230<br/>size: 1"]
+  node96 -->|L| node97
+  node98["8467<br/>size: 3"]
+  node96 -->|R| node98
+  node99["5766<br/>size: 2"]
+  node98 -->|L| node99
+  node100["8199<br/>size: 1"]
+  node99 -->|R| node100
 ```
 
