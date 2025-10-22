@@ -6,24 +6,99 @@
 //
 // console.log(Math.PI);
 
-function factor(n: number): number {
-  if (n < 0) {
-    return n;
-  } else if (n === 0) {
-    return 1;
-  } else {
-    return n * factor(n - 1);
+
+
+const s = `<prod><name>drill</name><prx>99</prx><qty>5</qty></prod>
+
+<prod><name>hammer</name><prx>10</prx><qty>50</qty></prod>
+
+<prod><name>screwdriver</name><prx>5</prx><qty>51</qty></prod>
+
+<prod><name>table saw</name><prx>1099.99</prx><qty>5</qty></prod>
+
+<prod><name>saw</name><prx>9</prx><qty>10</qty></prod>
+
+<prod><name>chair</name><prx>100</prx><qty>20</qty></prod>
+
+<prod><name>fan</name><prx>50</prx><qty>8</qty></prod>
+
+<prod><name>wire</name><prx>10.8</prx><qty>15</qty></prod>
+
+<prod><name>battery</name><prx>150</prx><qty>12</qty></prod>
+
+<prod><name>pallet</name><prx>10</prx><qty>50</qty></prod>
+
+<prod><name>wheel</name><prx>8.80</prx><qty>32</qty></prod>
+
+<prod><name>extractor</name><prx>105</prx><qty>17</qty></prod>
+
+<prod><name>bumper</name><prx>150</prx><qty>3</qty></prod>
+
+<prod><name>ladder</name><prx>112</prx><qty>12</qty></prod>
+
+<prod><name>hoist</name><prx>13.80</prx><qty>32</qty></prod>
+
+<prod><name>platform</name><prx>65</prx><qty>21</qty></prod>
+
+<prod><name>car wheel</name><prx>505</prx><qty>7</qty></prod>
+
+<prod><name>bicycle wheel</name><prx>150</prx><qty>11</qty></prod>
+
+<prod><name>big hammer</name><prx>18</prx><qty>12</qty></prod>
+
+<prod><name>saw for metal</name><prx>13.80</prx><qty>32</qty></prod>
+
+<prod><name>wood pallet</name><prx>65</prx><qty>21</qty></prod>
+
+<prod><name>circular fan</name><prx>80</prx><qty>8</qty></prod>
+
+<prod><name>exhaust fan</name><prx>62</prx><qty>8</qty></prod>
+
+<prod><name>window fan</name><prx>62</prx><qty>8</qty></prod>`;
+
+
+function catolog(s:string,articel:string) {
+  let target = RegExp(`${articel}`,"i")
+  let searchStr:string[] = []
+  let arrstr:string[] = [];
+  let str:string= "";
+  let tmp:string[] = [];
+  
+  for (let i = 0; i<s.length;i++ ) {
+    if(s[i] === '\n') {
+      if (str.length == 0) continue
+      arrstr.push(str)
+      str = ""
+    } else {
+      str += s[i]
+    }
   }
-}
+  for (let i = 0; i < arrstr.length - 1; i++) {
+    let str = ""
+    if(target.test(arrstr[i])) {
+      let s = 0;
+      for (let j = 0; j < arrstr[i].length - 1  ; j++ ) {
+        if(arrstr[i][j]+arrstr[i][j+1] === "</") {
+          for(let k = j; 0 < k; k--) {
+            if(arrstr[i][k] === ">") {
+              s = k+1;
+              break
+              }
+          }
+          for (let k = s; k < j; k++ ) {
+            str += arrstr[i][k]
+          }
+          tmp.push(str)
+          str = ""
+        }
+      }
+      console.log(tmp)
+      break
+    }
+  }
+  let answer = `${tmp[0]} > prx: ${tmp[1]} qty: ${tmp[2]}\r\n`
+  console.log()
 
-function diagonal(n: number, p: number): number {
-  n += 1;
-  p += 1;
-  return Math.round(factor(n) / (factor(p) * factor(n - p)));
+  return answer
 }
-
-function chek(n: number, p: number): number {
-  return factor(n) / (factor(p) * factor(n - p));
-}
-
-console.log(chek(5, 3));
+console.log(catolog(s,"saw"))
