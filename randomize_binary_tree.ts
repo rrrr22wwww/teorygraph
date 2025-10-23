@@ -37,38 +37,38 @@ function updateSize(node: Node | undefined): void {
 }
 
 function remove(p: Node | undefined, k: number): Node | undefined {
-    if (!p) return p;
+  if (!p) return p;
 
-    if (p.key === k) {
-        // Случай: лист или один ребёнок
-        if (!p.left) return p.right;
-        if (!p.right) return p.left;
+  if (p.key === k) {
+    // Случай: лист или один ребёнок
+    if (!p.left) return p.right;
+    if (!p.right) return p.left;
 
-        // Случай: два ребёнка — копируем преемника
-        let q = findMin(p.right,1);
-        if (q) {
-            // Минимальный в правом поддереве
-            p.key = q.key;
-            // Рекурсивно удаляем q из правого поддерева (q имеет только правого ребёнка или null)
-            p.right = remove(p.right, q.key);
-        }
-        updateSize(p);
-        return p;
-    } else if (k < p.key) {
-        p.left = remove(p.left, k);
-    } else {
-        p.right = remove(p.right, k);
+    // Случай: два ребёнка — копируем преемника
+    let q = findMin(p.right, 1);
+    if (q) {
+      // Минимальный в правом поддереве
+      p.key = q.key;
+      // Рекурсивно удаляем q из правого поддерева (q имеет только правого ребёнка или null)
+      p.right = remove(p.right, q.key);
     }
+    updateSize(p);
     return p;
+  } else if (k < p.key) {
+    p.left = remove(p.left, k);
+  } else {
+    p.right = remove(p.right, k);
+  }
+  return p;
 }
 
 // Вспомогательная функция: находит минимальный узел в поддереве
 function findMin(node: Node, size: number): Node {
-    while (node.left) {
-        if (node.left.size === size) console.log("Find min size:", node.left.key);
-        node = node.left;
-    }
-    return node;
+  while (node.left) {
+    if (node.left.size === size) console.log("Find min size:", node.left.key);
+    node = node.left;
+  }
+  return node;
 }
 
 function find(tree: Node | undefined, target: number): Node | undefined {
@@ -147,10 +147,7 @@ function CreateTree(m: string[], lenght: number): Node {
 
 let a = CreateTree(arrayData, Number(sizeData)); //["10","20","5","15","25","52","30"] - test rebalance tree
 
-
-
 console.log(a.left?.key);
-
 
 // Vizualiztion tree - Mermaid
 let nodeId = 0;
@@ -213,11 +210,10 @@ fs.appendFileSync(
   `*Сгенерировано: ${new Date().toLocaleString()}*\n\n---\n\n`,
 );
 saveMermaidToFile(a, "Исходное BST дерево", outputFile);
-remove(a,-246)
-saveMermaidToFile(a,"Дерево после удаления 246", outputFile3);
+remove(a, -246);
+saveMermaidToFile(a, "Дерево после удаления 246", outputFile3);
 let b = rebalancetree(a, 22);
 
 console.log(find(b, 22));
 
 saveMermaidToFile(b, "Дерево после rebalance", outputFile2);
-
