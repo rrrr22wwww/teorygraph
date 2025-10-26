@@ -35,7 +35,7 @@ function scanFolder(PATH: string) {
   }
 }
 
-const folderData = scanFolder("test/list_of_adjacency") as SelectOption[];
+const folderData = scanFolder("../test/list_of_adjacency") as SelectOption[];
 
 export function CustomSelected({ handle, option }: CustomSelectedProps) {
   const [selectIndex, setSelectedIndex] = useState(0);
