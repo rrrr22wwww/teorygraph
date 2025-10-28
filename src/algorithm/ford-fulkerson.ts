@@ -63,7 +63,7 @@ function dfs(graph: Graph) {
   adjList.next();
   adjList.next();
   adjList.next();
-
+  // 123
   console.log(adjList.next().value);
 }
 dfs(a);
