@@ -135,7 +135,7 @@ class Graph {
       .split("\n")
       .map((line) => line.trim());
     const weightgraph = new Map();
-    console.log(content);
+    // console.log(content);
     for (let i = 1; i < content.length; i++) {
       const lineParts = content[i].split(" ");
       const parsedLine = [];

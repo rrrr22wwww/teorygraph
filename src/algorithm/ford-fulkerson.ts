@@ -1,8 +1,9 @@
 import { Graph } from "./graphRealization";
 
 let a = new Graph();
+
 a.readfile(
-  "/Users/root1/Desktop/trg/teorygraph/test/list_of_adjacency_good_task_1/gpg_t1_001.txt",
+  "C:/Users/oisa0/OneDrive/Рабочий стол/tgr/teorygraph/test/list_of_adjacency_good_task_1/gpg_t1_004.txt",
 );
 
 type GraphLitsEdge = { [key: string]: string | number }[];
@@ -58,13 +59,20 @@ function FordFulkerson(graph: Graph): void {
   console.log(adjList);
 }
 
-function dfs(graph: Graph) {
-  let adjList = graph.filedata.keys();
-  adjList.next();
-  adjList.next();
-  adjList.next();
-  // 123
-  console.log(adjList.next().value);
+function dfs(graph: Graph, startVertex: number) {
+  let steck: number[] = [];
+  let visited = new Array(graph.filedata.size).fill(false);
+  steck.push(startVertex);
+  while (steck.length != 0) {
+    let u = steck[steck.length - 1];
+    steck.pop();
+    if (!visited[u - 1]) {
+      visited[u - 1] = true;
+      for (let j: number = graph.filedata.get(u).length - 1; j >= 0; j--) {
+        if (!visited[Number(graph.filedata.get(u)[j][0] - 1)]) {
+          steck.push(Number(graph.filedata.get(u)[j][0]));
+        }
+      }
+    }
+  }
 }
-dfs(a);
-// FordFulkerson(a);
