@@ -1,4 +1,5 @@
 import { Graph } from "./graphRealization";
+import util from "util";
 
 let a = new Graph();
 
@@ -8,10 +9,11 @@ a.readfile(
 
 type GraphLitsEdge = { [key: string]: string | number }[];
 
-function findSourceAndSink(graph: Graph): void {
+function findSourceAndSink(graph: Graph): GraphLitsEdge[] {
   const base: Map<number, number[]> = new Map(graph.filedata); // no sravnivaem s graph.filedata
   const stock = new Array();
   const snick = new Array();
+  console.log(util.inspect(graph.list_of_edges(), { maxArrayLength: null }));
   for (let i = 0; i < graph.list_of_edges().length; i++) {
     if (graph.filedata.get(i + 1)?.length == 0) {
       stock.push(i + 1);
@@ -37,26 +39,22 @@ function findSourceAndSink(graph: Graph): void {
   }
   /* eslint-enable */
   // prettier-ignore-end
-  console.log(stock, snick);
+  return [stock[0], snick[0]];
 }
 
 // findSourceAndSink(a);
 
 function FordFulkerson(graph: Graph): void {
   let adjList = graph.filedata;
+  let [stock, snick] = findSourceAndSink(graph);
+  let steck: number[] = [];
+  steck.push(Number(snick));
   // init flow
-  for (const vertex of adjList.keys()) {
-    for (let i = 0; i < adjList.get(vertex).length; i++) {
-      adjList.get(vertex)[i].push("0");
+  for (const edge of adjList.keys()) {
+    for (let i = 0; i <= adjList.get(edge).length - 1; i++) {
+      adjList.get(edge)[i].push("0");
     }
   }
-  // let edgList: EdgList = graph.list_of_edges();
-  // // init flow
-
-  // for (let i = 0; i < edgList.length; i++) {
-  //   edgList[i].flow = 0;
-  // }
-  console.log(adjList);
 }
 
 function dfs(graph: Graph, startVertex: number) {
@@ -64,6 +62,7 @@ function dfs(graph: Graph, startVertex: number) {
   let visited = new Array(graph.filedata.size).fill(false);
   steck.push(startVertex);
   while (steck.length != 0) {
+    console.log(steck);
     let u = steck[steck.length - 1];
     steck.pop();
     if (!visited[u - 1]) {
@@ -76,3 +75,4 @@ function dfs(graph: Graph, startVertex: number) {
     }
   }
 }
+FordFulkerson(a);
