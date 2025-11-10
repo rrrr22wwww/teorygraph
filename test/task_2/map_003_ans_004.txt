@@ -1,0 +1,3 @@
+0 - length of path between (9, 5) and (12, 11) points.
+Path:
+[]
