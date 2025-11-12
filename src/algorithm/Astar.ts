@@ -38,10 +38,6 @@ function initCoordinate(path: string) {
   return [start, end]
 }
 
-
-
-
-
 const heightMap = initMap("C:\\Users\\oisa0\\OneDrive\\Рабочий стол\\tgr\\teorygraph\\test\\task_2\\map_001.txt") // "/Users/root1/Desktop/trg/teorygraph/test/task_2/map_001.txt"
 const [st, end] = initCoordinate("C:\\Users\\oisa0\\OneDrive\\Рабочий стол\\tgr\\teorygraph\\test\\task_2\\map_001_task_002.txt") // "/Users/root1/Desktop/trg/teorygraph/test/task_2/map_001_task_002.txt"
 
@@ -61,7 +57,7 @@ function neighbours(position:number[]):neighbours {
       bottom: [position[0] + 1,position[1]],
     }
 }
-
+let vstd;
 function Astar(heightMap: number[][], start: number[], end: number[]): void {
   let map = heightMap;
   const queue = new binaryHeap<Node>((a,b)=> a.f < b.f);
@@ -84,13 +80,15 @@ function Astar(heightMap: number[][], start: number[], end: number[]): void {
 
     if (current?.position[0] === end[0] && current?.position[1] === end[1]) {
       console.log("Found path to the end:", current);
+      // console.log(visited,visited.size)
+      vstd = visited;
         // console.log(JSON.stringify(map)) --CHEK
       return;
     }
 
     const neighbors = neighbours(current.position); // -- refact code
     // console.log(neighbors)
-    let mindist = Infinity;
+    // console.log(current.f,current.position)
     for(let key in neighbors) {
       const row = neighbors[key][0];
       const col = neighbors[key][1];
@@ -101,25 +99,38 @@ function Astar(heightMap: number[][], start: number[], end: number[]): void {
         continue;
       }
 
-          if (visited.has(neighborKey)) { // --CHEK
+      if (visited.has(neighborKey)) { // --CHEK
         continue;
       }
       const currDist = dist(current.position, map[current.position[0]][current.position[1]], neighbors[key], map[row][col]);
-      const h = Chebyshev(neighbors[key], end); // Еврестическая оценка
+      const h = Chebyshev(neighbors[key], end);
+      // console.log(h,neighbors[key], end) // Еврестическая оценка
+  
       const g = current.g + currDist;
 
-      if(mindist > currDist + h) {
-        // map[current.position[0]][current.position[1]] = 1; - --CHEK
-        mindist = currDist + h
         queue.push({
           position: neighbors[key],
           g:g,
           f:g + h,
         })
-      }
+
     }
   }
 
 }
 
 Astar(heightMap, st, end)
+
+function pritArr(visited:any,heightMap: number[][]):void {
+  let arr  = visited.values();
+  let mtrx = structuredClone(heightMap)
+  console.table(mtrx)
+  for(let i = 0; i < visited.size; i++) {
+    let sr = arr.next().value;
+    let coord = [Number(sr[0]),Number(sr[2])]
+    mtrx[coord[0]][coord[1]] = 1;
+  }
+  console.table(mtrx)
+}
+
+ pritArr(vstd ,heightMap)
